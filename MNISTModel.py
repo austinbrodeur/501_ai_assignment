@@ -18,6 +18,7 @@ print("--Make model--")
 model = tf.keras.models.Sequential([
   tf.keras.layers.Flatten(input_shape=(28, 28))
 ])
+
 model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
 model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
 model.add(tf.keras.layers.Dense(10, activation=tf.nn.softmax)) # units in layer, activation type
@@ -25,7 +26,10 @@ model.add(tf.keras.layers.Dense(10, activation=tf.nn.softmax)) # units in layer,
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
 print("--Fit model--")
-model.fit(x_train, y_train, epochs=50, verbose=2)
+model.fit(x_train, y_train, epochs=10, verbose=2)
+
+print("--Saving model--")
+model.save("MNSIT.h5")
 
 print("--Evaluate model--")
 model_loss, model_acc = model.evaluate(x_test,  y_test, verbose=2)

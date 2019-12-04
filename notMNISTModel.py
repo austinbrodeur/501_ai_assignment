@@ -20,12 +20,19 @@ x_train, x_test = x_train / 255.0, x_test / 255.0
 print("--Make model--")
 model = tf.keras.models.Sequential([
     tf.keras.layers.Flatten(input_shape=(28, 28)),
-    tf.keras.layers.Dense(10, activation='sigmoid')
 ])
-model.compile(optimizer='sgd', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+
+model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
+model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
+model.add(tf.keras.layers.Dense(10, activation=tf.nn.softmax))
+
+model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
 print("--Fit model--")
-model.fit(x_train, y_train, epochs=1, verbose=2)
+model.fit(x_train, y_train, epochs=10, verbose=2)
+
+print("--Saving model--")
+model.save("notMNSIT.h5")
 
 print("--Evaluate model--")
 model_loss, model_acc = model.evaluate(x_test, y_test, verbose=2)
