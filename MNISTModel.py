@@ -26,10 +26,7 @@ model.add(tf.keras.layers.Dense(10, activation=tf.nn.softmax)) # units in layer,
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
 print("--Fit model--")
-model.fit(x_train, y_train, epochs=10, verbose=2)
-
-print("--Saving model--")
-model.save("MNSIT.h5")
+model.fit(x_train, y_train, epochs=1, verbose=2)
 
 print("--Evaluate model--")
 model_loss, model_acc = model.evaluate(x_test,  y_test, verbose=2)
@@ -37,3 +34,5 @@ print(f"Model Loss:    {model_loss:.2f}")
 print(f"Model Accuray: {model_acc*100:.1f}%")
 
 #Save Model
+print("--Saving model--")
+model.save("MNIST.h5")

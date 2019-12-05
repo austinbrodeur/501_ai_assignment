@@ -3,13 +3,19 @@ import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 
+#new_model = tf.keras.models.load_model("MNIST.h5")
+#
+# prediction = new_model.predict(x_test)
+# print(prediction[0])
+
 def main():
      class_names, data = check_args()
      x_test, y_test = data
+     x_test = x_test / 255.0
      print(f"--Load Model {sys.argv[2]}--")
      #Load the model that should be in sys.argv[2]
-     model = None
      pick = input(f"Pick test_image (0 -> {len(x_test)-1}):")
+     model = tf.keras.models.load_model(sys.argv[2])
      while pick.isdigit() and int(pick) >= 0 and int(pick) < len(x_test):
         pick = int(pick)
         img = x_test[pick]
@@ -21,10 +27,10 @@ def main():
 
 def predict(model, class_names, img, true_label):
     img = np.array([img])
-    #Replace these two lines with code to make a prediction
-    prediction = [1/10,1/10,1/10,1/10,1/10,1/10,1/10,1/10,1/10,1/10]
+    prediction = model.predict(img)
+    prediction = prediction[0]
+    predicted_label = np.argmax(prediction)
     #Determine what the predicted label is
-    predicted_label = 0
     plot(class_names, prediction, true_label, predicted_label, img[0])
     plt.show()
 
