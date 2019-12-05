@@ -30,7 +30,6 @@ def predict(model, class_names, img, true_label):
     prediction = model.predict(img)
     prediction = prediction[0]
     predicted_label = np.argmax(prediction)
-    #Determine what the predicted label is
     plot(class_names, prediction, true_label, predicted_label, img[0])
     plt.show()
 
