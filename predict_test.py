@@ -3,15 +3,22 @@ import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 
-#new_model = tf.keras.models.load_model("MNIST.h5")
-#
-# prediction = new_model.predict(x_test)
-# print(prediction[0])
-
 def main():
      class_names, data = check_args()
      x_test, y_test = data
+     x_test_unformatted, y_test_unformatted = data
+
+     img_rows = 28
+     img_cols = 28
+
+     if tf.keras.backend.image_data_format() == 'channels_first':
+         x_test = x_test.reshape(x_test.shape[0], 1, img_rows, img_cols)
+     else:
+         x_test = x_test.reshape(x_test.shape[0], img_rows, img_cols, 1)
+
+     x_test = x_test.astype('float32')
      x_test = x_test / 255.0
+
      print(f"--Load Model {sys.argv[2]}--")
      #Load the model that should be in sys.argv[2]
      pick = input(f"Pick test_image (0 -> {len(x_test)-1}):")
@@ -19,18 +26,20 @@ def main():
      while pick.isdigit() and int(pick) >= 0 and int(pick) < len(x_test):
         pick = int(pick)
         img = x_test[pick]
+        img_unformatted = x_test_unformatted[pick]
         guess = y_test[pick]
         print(f"--Should be Class {guess}--")
-        predict(model, class_names, img, guess)
+        predict(model, class_names, img, img_unformatted, guess)
         pick = input(f"Pick test_image (0 -> {len(x_test)-1}):")
      print("Done")
 
-def predict(model, class_names, img, true_label):
+def predict(model, class_names, img, img_unformatted, true_label):
     img = np.array([img])
+    img_unformatted = np.array([img_unformatted])
     prediction = model.predict(img)
     prediction = prediction[0]
     predicted_label = np.argmax(prediction)
-    plot(class_names, prediction, true_label, predicted_label, img[0])
+    plot(class_names, prediction, true_label, predicted_label, img_unformatted[0])
     plt.show()
 
 def check_args():

@@ -2,9 +2,30 @@
 
 ## Part 1 Report
 
+To improve the accuracy of this model, I did the following:
 * Added more dense layers, as one layer is not optimal.
 * Changed number of units in top two layers to 128.
 * Changed layer activation types (relu for input layers, softmax for output).
-* Changed model optimizer to Adam, as it seems to perform much better than sigamoid.
+* Changed model optimizer to Adam, as it seems to perform better than sigamoid.
 
 ## Part 2 Report
+
+To get the prediction scripts working and to train the notMNIST model, I did the following:
+* Added training for notMNIST similar to MNIST training
+* Added code to save the models into .h5 files
+* In the prediction scripts, I loaded the model(s) and did the prediction by adding the following lines of code to the predict method:
+```
+prediction = model.predict(img)
+prediction = prediction[0]
+predicted_label = np.argmax(prediction)
+```
+I found two predictions that were predicting incorrectly to base further improvements on:
+* for MNIST data, this I used test image 8 (predicts a 6, but is actually a 5).
+* for notMNIST data, I used test image 1 (predicts a G, but is actually an A).
+
+Adding convolution layers improved accuracy tremendously
+* for MNIST data, the test image prediction for image 8 is now correct (image 8 now correctly predicts 5).
+* for notMNIST data, the test image prediction for image 1 is actually now more wrong, however, the model is still much more accurate.
+
+Adding convolution layers broke the prediction scripts, however, I could only use predict_test reliably, as I could not get images to correctly work on my machine. Thus, I only fixed predict_test to get it to work with the new layers.
+
