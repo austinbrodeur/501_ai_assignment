@@ -1,5 +1,7 @@
 # 501_ai_assignment
 
+I have not changed any of the command line arguments or file names in any of the scripts, so they can all be run the same as the provided versions on the course website.
+
 ## Part 1 Report
 
 To improve the accuracy of this model, I did the following:
@@ -23,7 +25,7 @@ I found two predictions that were predicting incorrectly to base further improve
 * for MNIST data, this I used test image 8 (predicts a 6, but is actually a 5).
 * for notMNIST data, I used test image 1 (predicts a G, but is actually an A).
 
-Adding convolution layers improved accuracy tremendously
+I then added convolution layers to both models. Adding convolution layers improved accuracy in both models tremendously
 * for MNIST data, the test image prediction for image 8 is now correct (image 8 now correctly predicts 5).
 * for notMNIST data, the test image prediction for image 1 is actually now more wrong, however, the model is still much more accurate.
 
